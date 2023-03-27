@@ -36,7 +36,6 @@ const AuthProvider = ({ children }) => {
             axios.get('http://127.0.0.1:8000/api/user')
             .then((res)=>{
                 setUser(res.data);
-                console.log(res.data);
             })
 
             // console.log('form authcontext file', res.data);

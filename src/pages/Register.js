@@ -11,13 +11,12 @@ const Register = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [clubs, setClubs] = useState([]);
-    const [erros, setErrors] = useState([]);
+    const [erros, setErrors] = useState();
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/clubs')
+        axios.get(`${process.env.REACT_APP_BASE_URL}/clubs`)
             .then((res) => {
-                setClubs(res.data)
-                console.log(res);
+                setClubs(res.data.data)
             })
             .catch(err => console.log(err))
     }, []);
@@ -28,7 +27,7 @@ const Register = () => {
 
 
     const onSubmit = data => {
-        axios.post('http://localhost:5000/api/register',
+        axios.post(`${process.env.REACT_APP_BASE_URL}/register`,
             data
         )
             .then((res) => {
@@ -39,8 +38,9 @@ const Register = () => {
 
             })
             .catch((err) => {
-                console.log('this is error', err);
-                setErrors(err.response.data.errors)
+                console.log('this is error', err.response.data);
+                setErrors(err.response.data)
+                console.log('erros', errors);
             })
 
         console.log('dat', data)
@@ -66,6 +66,7 @@ const Register = () => {
                         <ul className='p-4'>
                             {
                                 erros.map((item, index) => {
+                                    console.log('item', item);
                                     return <li className='text-red-600 text-sm' key={index}>* {item.msg}</li>
                                 })
                             }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { FaAddressCard, FaMailBulk, FaMobileAlt, FaPhone, FaUser, FaUserPlus, FaUsers } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -8,18 +8,29 @@ import axios from '../../util/axios';
 const DepositForm = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [accounts, setAccounts] = useState([]);
     const [erros, setErrors] = useState([]);
-    const onSubmit = data =>{        
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_BASE_URL}/paymentmethod`)
+            .then((res) => {
+                setAccounts(res.data.data);
+                console.log(res.data);
+            })
+            .catch(err => console.log(err))
+    }, []);
+
+    const onSubmit = data => {
         console.log(data)
-        axios.post('http://localhost:5000/api/deposite/store',
-        data
+        axios.post(`${process.env.REACT_APP_BASE_URL}/user/deposit`,
+            data
         )
-        .then((res)=>{
-            console.log(res);
-            navigate('/profile')
-            
-        })
-        .catch(err=>console.log(err))
+            .then((res) => {
+                console.log(res);
+                navigate('/profile')
+
+            })
+            .catch(err => console.log(err))
     };
 
     return (
@@ -39,11 +50,16 @@ const DepositForm = () => {
                             </select>
                         </div>
                         <div className="">
-                            <label htmlFor="toAccount" className="block font-medium text-gray-700">
+                            <label htmlFor="to_account" className="block font-medium text-gray-700">
                                 To
                             </label>
-                            <select {...register("toAccount")} name="toAccount" className='border w-full rounded focus:ring-purple-800 px-1'>
-                                <option value="01876573605">01876573605 (personal)</option>
+                            <select {...register("to_account")} name="to_account" className='border w-full rounded focus:ring-purple-800 px-1'>
+                            <option defaultValue="" >Select</option>
+                                {
+                                    accounts.map((item, index)=>{
+                                        return <option key={index} value={item.number} >{`${item.number} - ${item.bank}-${item.type}`})</option>
+                                    })
+                                }
                             </select>
                         </div>
 
@@ -52,7 +68,7 @@ const DepositForm = () => {
                                 Amount
                             </label>
                             <input
-                            {...register("amount", {required: 'Amount is requred.'})}
+                                {...register("amount", { required: 'Amount is requred.' })}
                                 type="number"
                                 name="amount"
                                 id="first-name"
@@ -66,9 +82,9 @@ const DepositForm = () => {
                                 From
                             </label>
                             <input
-                            {...register("fromAccount")}
+                                {...register("from_account")}
                                 type="text"
-                                name="fromAccount"
+                                name="from_account"
                                 id="first-name"
                                 autoComplete="given-name"
                                 className="border w-full rounded focus:ring-purple-800 px-2"
@@ -79,9 +95,9 @@ const DepositForm = () => {
                                 Transiction
                             </label>
                             <input
-                            {...register("transactionId")}
+                                {...register("transaction_id")}
                                 type="text"
-                                name="transactionId"
+                                name="transaction_id"
                                 id="first-name"
                                 autoComplete="given-name"
                                 className="border w-full rounded focus:ring-purple-800 px-2"

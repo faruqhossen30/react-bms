@@ -7,7 +7,6 @@ import { AuthContext } from '../../contexts/authContext';
 
 const Header = () => {
   const {user} = useContext(AuthContext);
-  console.log('header component',user);
   // console.log('header component',user.is_admin);
   const MySwal = withReactContent(Swal)
   const logoutHandaller = () => {

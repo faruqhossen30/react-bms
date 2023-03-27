@@ -8,15 +8,13 @@ const Login = () => {
     const {user} = useContext(AuthContext);
     const email = useRef();
     const password = useRef();
-
-    console.log('login component', Boolean(user));
-    console.log('login component=', user);
-
     const [error, setError] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const loginSubmit = async (e) => {
         e.preventDefault();
         console.log('email=', email.current.value, 'pass', password.current.value);
+        setErrorMessage('');
         try {
             const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/login`, { email: email.current.value, password: password.current.value });
             console.log(data);
@@ -24,9 +22,10 @@ const Login = () => {
             cogoToast.success('Login successfully !',{ position: 'top-right' });
             window.location = "/";
         } catch (error) {
-            console.log(error);
-            if (error.response && error.response.status === 400) {
-                setError(error.response.data);
+            console.log('error',error);
+            if (error.response && error.response.status === 403) {
+                console.log('error 403');
+                setErrorMessage(error.response.data.message)
             }
         }
     };
@@ -45,7 +44,7 @@ const Login = () => {
                         <p className="mt-2 text-center text-sm text-gray-600">
                             Or
                             <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500"> Register Now !</Link>
-                        </p>
+                        </p>                        
                     </div>
                     <form className="mt-8 space-y-6" method="POST" onSubmit={loginSubmit}>
                         <input type="hidden" name="remember" value="true" />
@@ -61,6 +60,9 @@ const Login = () => {
                             <div>
                                 {error && <p className=" font-semibold text-red-600 text-sm py-1">{error}</p>}
                             </div>
+                        </div>
+                        <div>
+                            <p className='text-red-500'>{errorMessage && errorMessage}</p>
                         </div>
 
                         <div className="flex items-center justify-between">

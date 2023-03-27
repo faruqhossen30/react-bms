@@ -11,12 +11,10 @@ const DepositList = () => {
     const user = useContext(AuthContext);
     const [deposits, setDeposits] = useState([]);
 
-    // console.log('user',user);
-
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/user/${user._id}/deposites`)
+        axios.get(`${process.env.REACT_APP_BASE_URL}/user/deposits`)
             .then((res) => {
-                setDeposits(res.data.docs)
+                setDeposits(res.data.data)
                 console.log(res);
             })
             .catch(err => console.log(err))
@@ -25,8 +23,6 @@ const DepositList = () => {
 
     return (
         <AppLayout>
-
-
             <div>
                 <UserNavbar />
                 <div>
@@ -36,10 +32,10 @@ const DepositList = () => {
                     <thead>
                         <tr className='bg-gray-100 text-gray-500 text-md font-normal'>
                             <th className="border border-slate-300">S.N</th>
-                            <th className="border border-slate-300">From</th>
-                            <th className="border border-slate-300">To</th>
-                            <th className="border border-slate-300">Method</th>
                             <th className="border border-slate-300">Amount</th>
+                            <th className="border border-slate-300">From</th>
+                            <th className="border border-slate-300">Method</th>
+                            <th className="border border-slate-300">To</th>
                             <th className="border border-slate-300">Transction</th>
                             <th className="border border-slate-300">Status</th>
                             <th className="border border-slate-300">Time</th>
@@ -47,16 +43,23 @@ const DepositList = () => {
                     </thead>
                     <tbody>
                         {
-                            deposits.map((deposit, index) => {
+                            deposits.map((item, index) => {
                                 return <tr className='p-1 text-sm' >
-                                    <td className="p-2 border border-slate-300 text-center">{index+1}</td>
-                                    <td className="p-2 border border-slate-300">{deposit.fromAccount}</td>
-                                    <td className="p-2 border border-slate-300">{deposit.toAccount}</td>
-                                    <td className="p-2 border border-slate-300">{deposit.method}</td>
-                                    <td className="p-2 border border-slate-300">{deposit.amount}</td>
-                                    <td className="p-2 border border-slate-300">{deposit.transactionId}</td>
-                                    <td className="p-2 border border-slate-300">{deposit.status}</td>
-                                    <td className="p-2 border border-slate-300">{moment(deposit.createdAt).calendar()}</td>
+                                    <td className="p-2 border border-slate-300 text-center">{index + 1}</td>
+                                    <td className="p-2 border border-slate-300 text-center">{item.amount}</td>
+                                    <td className="p-2 border border-slate-300 text-center">{item.from_account}</td>
+                                    <td className="p-2 border border-slate-300 text-center">{item.method}</td>
+                                    <td className="p-2 border border-slate-300 text-center">{item.to_account}</td>
+                                    <td className="p-2 border border-slate-300 text-center">{item.transaction_id}</td>
+                                    <td className="p-2 border border-slate-300 text-center">{item.status}</td>
+                                    <td className="p-2 border border-slate-300 text-center"> {moment(item.created_at).format('LL')}
+                                    <br/>
+                                        <span class="inline-flex items-center m-2 px-1  bg-green-200 hover:bg-green-300 rounded-full text-sm font-semibold text-green-600">
+                                            <span class="ml-1">
+                                            {moment(item.created_at).format('h:mm A')}
+                                            </span>
+                                        </span>
+                                    </td>
                                 </tr>
                             })
                         }
