@@ -51,12 +51,25 @@ const DepositList = () => {
                                     <td className="p-2 border border-slate-300 text-center">{item.method}</td>
                                     <td className="p-2 border border-slate-300 text-center">{item.to_account}</td>
                                     <td className="p-2 border border-slate-300 text-center">{item.transaction_id}</td>
-                                    <td className="p-2 border border-slate-300 text-center">{item.status}</td>
+                                    <td className="p-2 border border-slate-300 text-center">
+                                        {item.status ?
+                                            <span class="inline-flex items-center m-2 px-1  bg-green-200 hover:bg-green-300 rounded-full text-sm font-semibold text-green-600">
+                                                <span class="ml-1">
+                                                    Done !
+                                                </span>
+                                            </span> :
+                                            <span class="inline-flex items-center m-2 px-1  bg-red-200 hover:bg-red-300 rounded-full text-sm font-semibold text-red-500">
+                                                <span class="ml-1">
+                                                   Pending 
+                                                </span>
+                                            </span>
+                                        }
+                                    </td>
                                     <td className="p-2 border border-slate-300 text-center"> {moment(item.created_at).format('LL')}
-                                    <br/>
+                                        <br />
                                         <span class="inline-flex items-center m-2 px-1  bg-green-200 hover:bg-green-300 rounded-full text-sm font-semibold text-green-600">
                                             <span class="ml-1">
-                                            {moment(item.created_at).format('h:mm A')}
+                                                {moment(item.created_at).format('h:mm A')}
                                             </span>
                                         </span>
                                     </td>

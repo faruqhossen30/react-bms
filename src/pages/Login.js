@@ -1,6 +1,5 @@
 import React, { useContext, useRef, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
-import cogoToast from 'cogo-toast';
 import axios from '../util/axios';
 import { AuthContext } from '../contexts/authContext';
 
@@ -19,7 +18,7 @@ const Login = () => {
             const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/login`, { email: email.current.value, password: password.current.value });
             console.log(data);
             localStorage.setItem("token", data.token);
-            cogoToast.success('Login successfully !',{ position: 'top-right' });
+            // cogoToast.success('Login successfully !',{ position: 'top-right' });
             window.location = "/";
         } catch (error) {
             console.log('error',error);

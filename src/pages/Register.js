@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import cogoToast from 'cogo-toast';
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import InputInnerLabel from '../components/frontend/form/InputInnerLabel';
 import axios from '../util/axios';
@@ -33,7 +32,7 @@ const Register = () => {
             .then((res) => {
                 console.log(res);
                 localStorage.setItem("token", res.data);
-                cogoToast.success('Login successfully !', { position: 'top-right' });
+                // cogoToast.success('Login successfully !', { position: 'top-right' });
                 navigate('/')
 
             })
