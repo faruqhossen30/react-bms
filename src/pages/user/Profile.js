@@ -16,7 +16,7 @@ const Profile = () => {
 
                 <div className='flex justify-between border p-2 my-1 items-center shadow'>
                     <div className='flex flex-col font-semibold'>
-                        <span>$500</span>
+                        <span>৳{user.balance}</span>
                         <span>Balance</span>
                     </div>
                     <div>

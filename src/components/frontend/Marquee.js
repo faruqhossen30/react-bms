@@ -5,17 +5,7 @@ import fetcher from '../../util/fetcher';
 
 
 const Marquee = () => {
-    // const [headerNotice, setHeaderNotice] = useState('');
-    // useEffect(() => {
-    //     axios.get(`${process.env.REACT_APP_BASE_URL}/headernotice`)
-    //         .then((res) => {
-    //             setHeaderNotice(res.data.data)
-    //         })
-    //         .catch(err => console.log(err))
-    // }, []);
-
     const { data } = useSWR(`${process.env.REACT_APP_BASE_URL}/headernotice`, fetcher, { suspense: true });
-    console.log('data', data);
 
     return (
         <>

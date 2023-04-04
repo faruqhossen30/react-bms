@@ -44,7 +44,7 @@ const DepositList = () => {
                     <tbody>
                         {
                             deposits.map((item, index) => {
-                                return <tr className='p-1 text-sm' >
+                                return <tr className='p-1 text-sm' key={index}>
                                     <td className="p-2 border border-slate-300 text-center">{index + 1}</td>
                                     <td className="p-2 border border-slate-300 text-center">{item.amount}</td>
                                     <td className="p-2 border border-slate-300 text-center">{item.from_account}</td>
@@ -53,13 +53,13 @@ const DepositList = () => {
                                     <td className="p-2 border border-slate-300 text-center">{item.transaction_id}</td>
                                     <td className="p-2 border border-slate-300 text-center">
                                         {item.status ?
-                                            <span class="inline-flex items-center m-2 px-1  bg-green-200 hover:bg-green-300 rounded-full text-sm font-semibold text-green-600">
-                                                <span class="ml-1">
+                                            <span className="inline-flex items-center m-2 px-1  bg-green-200 hover:bg-green-300 rounded-full text-sm font-semibold text-green-600">
+                                                <span className="ml-1">
                                                     Done !
                                                 </span>
                                             </span> :
-                                            <span class="inline-flex items-center m-2 px-1  bg-red-200 hover:bg-red-300 rounded-full text-sm font-semibold text-red-500">
-                                                <span class="ml-1">
+                                            <span className="inline-flex items-center m-2 px-1  bg-red-200 hover:bg-red-300 rounded-full text-sm font-semibold text-red-500">
+                                                <span className="ml-1">
                                                    Pending 
                                                 </span>
                                             </span>
@@ -67,8 +67,8 @@ const DepositList = () => {
                                     </td>
                                     <td className="p-2 border border-slate-300 text-center"> {moment(item.created_at).format('LL')}
                                         <br />
-                                        <span class="inline-flex items-center m-2 px-1  bg-green-200 hover:bg-green-300 rounded-full text-sm font-semibold text-green-600">
-                                            <span class="ml-1">
+                                        <span className="inline-flex items-center m-2 px-1  bg-green-200 hover:bg-green-300 rounded-full text-sm font-semibold text-green-600">
+                                            <span className="ml-1">
                                                 {moment(item.created_at).format('h:mm A')}
                                             </span>
                                         </span>
