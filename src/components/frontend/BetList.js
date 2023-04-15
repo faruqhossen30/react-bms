@@ -1,4 +1,5 @@
 import { Dialog, Disclosure, Transition } from '@headlessui/react';
+import useSWR from 'swr';
 import { Accordion, AccordionBody, AccordionHeader } from '@material-tailwind/react'
 import moment from 'moment';
 import React, { Fragment, useEffect, useState } from 'react'
@@ -7,6 +8,7 @@ import axios from '../../util/axios';
 import InputInnerLabel from './form/InputInnerLabel';
 import Sidebar from './Sidebar';
 import Modalbetnow from '../modal/Modalbetnow';
+import fetcher from '../../util/fetcher';
 
 const BetList = () => {
     const [matches, setMatches] = useState([]);
@@ -17,14 +19,7 @@ const BetList = () => {
     const [questionData, setQuestionData] = useState([]);
     const [optionData, setOptionData] = useState([]);
 
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BASE_URL}/matches`)
-            .then((res) => {
-                setMatches(res.data.data);
-            })
-            .catch(err => console.log(err))
-    }, []);
-
+    const {data} = useSWR(`${process.env.REACT_APP_BASE_URL}/matches`, fetcher, {suspense:true});
     const [isOpen, setIsOpen] = useState(false);
 
     function closeModal() {
@@ -46,7 +41,7 @@ const BetList = () => {
 
             <div className='col-span-12 lg:col-span-7 bg-white'>
                 {
-                    matches.map((match, index) => {
+                    data.map((match, index) => {
                         return <Disclosure as='div' className='shadow-md mb-1 border border-purple-300 text-sm' defaultOpen key={index}>
                             <Disclosure.Button as='div' className="cursor-pointer p-2">
                                 <div className='flex items-center justify-between space-x-2 w-full'>

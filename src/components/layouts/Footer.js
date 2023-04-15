@@ -6,7 +6,7 @@ import {AuthContext} from '../../contexts/authContext'
 import logoutHandaller from '../../util/logoutHandaller'
 
 const Footer = () => {
-    const user = useContext(AuthContext);
+    const {user} = useContext(AuthContext);
     return (
         <footer className='md:hidden grid grid-cols-5 border-t-2 text-sm text-purple-800 bg-red-100 inset-x-0 bottom-0 fixed pt-1'>
             <Link to='/' className='col-span-1 flex flex-col items-center'>
@@ -41,7 +41,7 @@ const Footer = () => {
                             <>
 
                                 {
-                                    user && user.isUser
+                                    user && user.is_user
                                         ? (
                                             <>
                                                 <Link to='/statement' className='flex items-center space-x-2 p-2'>
@@ -54,7 +54,7 @@ const Footer = () => {
                                                 </button>
                                             </>
                                         )
-                                        : user && user.isAdmin
+                                        : user && user.is_admin
                                             ? (
                                                 <>
                                                     <Link to='/admin/dashboard' className='flex items-center space-x-2 p-2'>
