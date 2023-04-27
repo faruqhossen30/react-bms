@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
-import { FaAddressCard, FaMailBulk, FaMobileAlt, FaPhone, FaUser, FaUserPlus, FaUsers } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../../components/layouts/AppLayout';
 import axios from '../../util/axios';

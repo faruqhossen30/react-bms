@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import useSWR from 'swr';
-import axios from '../../util/axios';
 import fetcher from '../../util/fetcher';
 
 

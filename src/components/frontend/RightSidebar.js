@@ -1,13 +1,14 @@
-import { Dialog, Disclosure, Transition } from '@headlessui/react';
+import React from 'react'
 import useSWR from 'swr';
+import { Disclosure} from '@headlessui/react';
 import moment from 'moment';
-import React, { Fragment, useEffect, useState } from 'react'
-import { FaRegCalendarAlt, FaRegClock } from 'react-icons/fa';
-import Modalbetnow from '../modal/Modalbetnow';
+import { useState } from 'react';
 import fetcher from '../../util/fetcher';
+import { FaRegCalendarAlt, FaRegClock } from 'react-icons/fa';
 
-const BetList = (props) => {
+const RightSidebar = () => {
     const [matches, setMatches] = useState([]);
+
     const [edata, setEdata] = useState([]);
 
     const [matchData, setMatchData] = useState([]);
@@ -29,18 +30,15 @@ const BetList = (props) => {
 
     }
 
-
     return (
-        <>
-            <Modalbetnow matchData={matchData} questionData={questionData} optionData={optionData} isOpen={isOpen} setIsOpen={setIsOpen} />
-
-            <div className='col-span-12 lg:col-span-7 bg-white'>
+        <div className='hidden lg:block lg:col-span-3'>
             <div className="bg-purple-800">
-                <h4 className="text-white font-bold p-1 text-center">Live Match</h4>
+                <h4 className="text-white font-bold p-1 text-center">Upcomming Match</h4>
             </div>
-                {
+
+            {
                     data.map((match, index) => {
-                        return <Disclosure as='div' className='shadow-md mb-1 border border-purple-300 text-sm' defaultOpen key={index}>
+                        return <Disclosure as='div' className='shadow-md mb-1 border border-purple-300 text-sm' key={index}>
                             <Disclosure.Button as='div' className="cursor-pointer p-2">
                                 <div className='flex items-center justify-between space-x-2 w-full'>
                                     <div className='flex items-center space-x-1'>
@@ -94,11 +92,8 @@ const BetList = (props) => {
                         </Disclosure>
                     })
                 }
-
-
-            </div>
-        </>
+        </div>
     )
 }
 
-export default BetList
+export default RightSidebar

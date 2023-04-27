@@ -45,6 +45,7 @@ import WidthdrawList from './pages/user/WidthdrawList';
 import TransactionHistory from './pages/user/TransactionHistory';
 import WidthdrawLimit from './pages/admin/settings/WidthdrawLimit';
 import BetLimit from './pages/admin/settings/BetLimit';
+import HomepageGame from './pages/HomepageGame';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
         <Routes>
           {/* <Route path="*" element={<PageNotFound />} /> */}
           <Route path="/" element={<Homepage />} />
+          {/* <Route path="/:gameid" element={<HomepageGame />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           

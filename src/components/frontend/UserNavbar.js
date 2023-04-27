@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaAddressCard, FaCheckCircle, FaEdit, FaHome, FaMailBulk, FaMobileAlt, FaPhone, FaUser, FaUserPlus, FaUsers } from 'react-icons/fa'
+import { FaHome} from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 const UserNavbar = () => {

@@ -1,6 +1,5 @@
 import axios from '../../util/axios';
 import React, { useEffect, useState } from 'react'
-import ReactPaginate from 'react-paginate';
 
 import { FaEdit, FaEye, FaPlusCircle, FaTrash } from 'react-icons/fa'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'

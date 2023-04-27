@@ -1,27 +1,28 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
-import { FaAddressCard, FaMailBulk, FaMobileAlt, FaPhone, FaUser, FaUserPlus, FaUsers } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../../components/layouts/AppLayout';
 import axios from '../../util/axios';
+import { AuthContext } from '../../contexts/authContext';
 
 const WidthdrawForm = () => {
     const navigate = useNavigate();
+    const { user } = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [erros, setErrors] = useState([]);
+    const[errorMessage, setErrorMessage] = useState('');
     const onSubmit = data => {
         console.log(data)
-        axios.post(`${process.env.REACT_APP_API_URL}/user/widthdraws/store`,
-            data
-        )
+        axios.post(`${process.env.REACT_APP_BASE_URL}/user/withdraw`, data)
             .then((res) => {
                 console.log(res);
                 navigate('/profile')
-
             })
             .catch((err) => {
+                if(err.response.status == 422){
+                    setErrorMessage(err.response.data.message)
+                }
                 console.log('this is error', err);
-                setErrors(err.response.data.errors)
+                // setErrors(err.response.data.errors)
             })
 
     };
@@ -33,18 +34,8 @@ const WidthdrawForm = () => {
                     <div className='bg-gray-200 p-2'>
                         <h4 >WidthdrawForm</h4>
                     </div>
+                    <span className='text-red-600 text-sm px-2'>{errorMessage && errorMessage}</span>
 
-
-                    {
-                        erros &&
-                        <ul className='p-4'>
-                            {
-                                erros.map((item, index) => {
-                                    return <li className='text-red-600 text-sm' key={index}>* {item.msg}</li>
-                                })
-                            }
-                        </ul>
-                    }
 
 
 
@@ -53,7 +44,7 @@ const WidthdrawForm = () => {
                             <label htmlFor="method" className="block font-medium text-gray-700">
                                 Method
                             </label>
-                            <select {...register("method",{required:'Method is required.'})} id='method' name="method" className='border w-full rounded focus:ring-purple-800 px-1'>
+                            <select {...register("method", { required: 'Method is required.' })} id='method' name="method" className='border w-full rounded focus:ring-purple-800 px-1'>
                                 <option value="BKash">BKash</option>
                             </select>
                             <span className='text-red-600 text-sm'>{errors.method?.message}</span>
@@ -62,18 +53,18 @@ const WidthdrawForm = () => {
                             <label htmlFor="type" className="block font-medium text-gray-700">
                                 Account Type
                             </label>
-                            <select {...register("type",{required:'Account type is requred.'})} id='type' name="type" className='border w-full rounded focus:ring-purple-800 px-1'>
+                            <select {...register("type", { required: 'Account type is requred.' })} id='type' name="type" className='border w-full rounded focus:ring-purple-800 px-1'>
                                 <option value="Personal">Personal</option>
                                 <option value="Agent">Agent</option>
                             </select>
                             <span className='text-red-600 text-sm'>{errors.type?.message}</span>
                         </div>
                         <div className="">
-                            <label htmlFor="accountNumber" className="block font-medium text-gray-700">
+                            <label htmlFor="account" className="block font-medium text-gray-700">
                                 Account Number
                             </label>
-                            <input {...register("accountNumber",{required:'Account number is requred.'})} name="accountNumber" className='border w-full rounded focus:ring-purple-800 px-1' />
-                            <span className='text-red-600 text-sm'>{errors.accountNumber?.message}</span>
+                            <input {...register("account", { required: 'Account number is requred.' })} name="account" className='border w-full rounded focus:ring-purple-800 px-1' />
+                            <span className='text-red-600 text-sm'>{errors.account?.message}</span>
                         </div>
 
                         <div className="">
@@ -81,7 +72,7 @@ const WidthdrawForm = () => {
                                 Amount
                             </label>
                             <input
-                                {...register("amount", { required: 'Amount Taka is requred.' })}
+                                {...register("amount", { required: 'Amount Taka is requred.', max: { value: user?.balance, message: 'Insufficient  balance' } })}
                                 type="number"
                                 name="amount"
                                 id="first-name"
@@ -90,12 +81,12 @@ const WidthdrawForm = () => {
                             />
                             <span className='text-red-600 text-sm'>{errors.amount?.message}</span>
                         </div>
-                        <div className="">
+                        {/* <div className="">
                             <label htmlFor="password" className="block font-medium text-gray-700">
                                 Password
                             </label>
                             <input
-                                {...register("password",{required:'Enter password.'})}
+                                {...register("password", { required: 'Enter password.' })}
                                 type="password"
                                 name="password"
                                 id="password"
@@ -103,7 +94,7 @@ const WidthdrawForm = () => {
                                 className="border w-full rounded focus:ring-purple-800 px-2"
                             />
                             <span className='text-red-600 text-sm'>{errors.password?.message}</span>
-                        </div>
+                        </div> */}
 
                         <button className='bg-purple-800 text-white text-sm py-1 px-3 rounded'>Widthdraw Now</button>
                     </form>

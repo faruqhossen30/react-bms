@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import InputInnerLabel from '../components/frontend/form/InputInnerLabel';
-import axios from '../util/axios';
 import { AuthContext } from '../contexts/authContext';
+import axios from '../util/axios';
 
 const Register = () => {
     const { user } = useContext(AuthContext);

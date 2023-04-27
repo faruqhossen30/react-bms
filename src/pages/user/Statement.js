@@ -1,6 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { FaAddressCard, FaCheckCircle, FaEdit, FaHome, FaMailBulk, FaMobileAlt, FaPhone, FaUser, FaUserPlus, FaUsers } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import UserNavbar from '../../components/frontend/UserNavbar'
 import AppLayout from '../../components/layouts/AppLayout'
 import axios from '../../util/axios'

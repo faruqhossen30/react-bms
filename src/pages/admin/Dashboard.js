@@ -1,5 +1,4 @@
 import React from 'react'
-import { FaGamepad, FaHome } from 'react-icons/fa'
 import CardStatus from '../../components/dashboard/CardStatus'
 import DashboardLayout from '../../components/layouts/DashboardLayout'
 

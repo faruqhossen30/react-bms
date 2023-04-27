@@ -1,12 +1,12 @@
-import { Dialog, Disclosure, Transition } from '@headlessui/react';
+import { Disclosure } from '@headlessui/react';
 import useSWR from 'swr';
 import moment from 'moment';
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { FaRegCalendarAlt, FaRegClock } from 'react-icons/fa';
 import Modalbetnow from '../modal/Modalbetnow';
 import fetcher from '../../util/fetcher';
 
-const BetList = (props) => {
+const BetListByGame = ({gameid}) => {
     const [matches, setMatches] = useState([]);
     const [edata, setEdata] = useState([]);
 
@@ -14,9 +14,11 @@ const BetList = (props) => {
     const [questionData, setQuestionData] = useState([]);
     const [optionData, setOptionData] = useState([]);
 
-    const {data} = useSWR(`${process.env.REACT_APP_BASE_URL}/matches`, fetcher, {suspense:true});
+    const {data} = useSWR(`${process.env.REACT_APP_BASE_URL}/matches/${gameid}`, fetcher,{suspense:true});
+    console.log('data', data);
     const [isOpen, setIsOpen] = useState(false);
 
+    console.log(data);
     function closeModal() {
         setIsOpen(false);
     }
@@ -101,4 +103,4 @@ const BetList = (props) => {
     )
 }
 
-export default BetList
+export default BetListByGame

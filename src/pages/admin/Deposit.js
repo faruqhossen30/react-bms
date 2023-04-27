@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
 import moment from 'moment'
-import { FaCheck, FaCheckCircle, FaEdit, FaEye, FaPlusCircle, FaTrash, FaTrashAlt } from 'react-icons/fa'
+import { FaCheckCircle, FaEdit, FaPlusCircle } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import { Dialog } from '@headlessui/react'
 import Breadcrumb from '../../components/dashboard/Breadcrumb'
 import DashboardLayout from '../../components/layouts/DashboardLayout'
 import axios from '../../util/axios'

@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
 import { FaRegBell, FaBars, FaPlus, FaHome, FaPlusCircle } from "react-icons/fa";
 import Sidebar from '../../components/dashboard/sidebar/Sidebar';
 import Sidebarcollapse from '../../components/dashboard/sidebar/Sidebarcollapse';
-import DashboardRoute from '../../routes/DashboardRoute';
 
 const DashboardLayout = ({children}) => {
   const [isToggle, setIsToggle] = useState(true);

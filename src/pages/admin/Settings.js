@@ -1,11 +1,6 @@
 import React from 'react'
 import DashboardLayout from '../../components/layouts/DashboardLayout'
-// import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { Tab } from '@headlessui/react'
 import { FaBullhorn, FaCog, FaCommentsDollar, FaGamepad, FaHome, FaIdCard, FaMoneyBill, FaSave } from 'react-icons/fa';
-import NoticeComponent from '../../components/dashboard/settings/NoticeComponent';
-import PaymentGateway from '../../components/dashboard/settings/PaymentGateway';
-import FooterNotice from '../../components/dashboard/settings/FooterNotice';
 import { Link } from 'react-router-dom';
 
 const Settings = ({children}) => {
