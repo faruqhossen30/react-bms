@@ -4,22 +4,13 @@ import setAuthToken from '../util/setAuthToken';
 const AuthContext = createContext();
 
 
-const AuthProvider = ({ children }) => {
+const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState();
     const [isLogin, setIsLogin] = useState(false);
     const [token, setToken] = useState(null);
+    console.log('AuthContextProvider');
 
     useEffect(() => {
-        // const jwt = localStorage.getItem("token");
-        // setAuthToken();
-
-        // axios.get('http://127.0.0.1:8000//api/user')
-        //     .then((data) => {
-        //         console.log('form authcontext file', data.data);
-        //         setUser(data.data);
-
-        //     })
-        //     .catch(error => console.log(error))
 
         const getToken = () => {
             const token = localStorage.getItem("token");
@@ -33,13 +24,10 @@ const AuthProvider = ({ children }) => {
             // }
 
 
-            axios.get('http://127.0.0.1:8000/api/user')
+            axios.get(`${process.env.REACT_APP_BASE_URL}/user`)
             .then((res)=>{
                 setUser(res.data);
             })
-
-            // console.log('form authcontext file', res.data);
-            //     setUser(res.data);
         }
         getToken();
 
@@ -54,4 +42,4 @@ const AuthProvider = ({ children }) => {
     )
 };
 
-export {AuthContext, AuthProvider};
+export {AuthContext, AuthContextProvider};

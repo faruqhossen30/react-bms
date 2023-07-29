@@ -2,9 +2,11 @@ import React, { useContext, useRef, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import axios from '../util/axios';
 import { AuthContext } from '../contexts/authContext';
+import { useAuthUser, useSignIn } from 'react-auth-kit';
 
 const Login = () => {
-    const {user} = useContext(AuthContext);
+    const auth = useAuthUser();
+    const signIn = useSignIn();
     const email = useRef();
     const password = useRef();
     const [error, setError] = useState(null);
@@ -15,11 +17,20 @@ const Login = () => {
         console.log('email=', email.current.value, 'pass', password.current.value);
         setErrorMessage('');
         try {
-            const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/login`, { email: email.current.value, password: password.current.value });
-            console.log(data);
-            localStorage.setItem("token", data.token);
+            const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/login`, { email: email.current.value, password: password.current.value });
+            console.log(res);
+            signIn(
+                {
+                  token: res.data.token,
+                  expiresIn: 12345,
+                  tokenType: "Bearer",
+                  authState: res.data.data,
+                  refreshToken: res.data.refreshToken,                    // Only if you are using refreshToken feature
+                  refreshTokenExpireIn: res.data.refreshTokenExpireIn     // Only if you are using refreshToken feature
+                }
+              );
             // cogoToast.success('Login successfully !',{ position: 'top-right' });
-            window.location = "/";
+            // window.location = "/";
         } catch (error) {
             console.log('error',error);
             if (error.response && error.response.status === 403) {
@@ -29,7 +40,7 @@ const Login = () => {
         }
     };
 
-    if (user) {
+    if (auth()) {
         return <Navigate to='/' />
     } else {
         return (
@@ -43,7 +54,7 @@ const Login = () => {
                         <p className="mt-2 text-center text-sm text-gray-600">
                             Or
                             <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500"> Register Now !</Link>
-                        </p>                        
+                        </p>
                     </div>
                     <form className="mt-8 space-y-6" method="POST" onSubmit={loginSubmit}>
                         <input type="hidden" name="remember" value="true" />

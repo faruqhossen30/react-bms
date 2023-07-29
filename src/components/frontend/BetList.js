@@ -14,7 +14,7 @@ const BetList = (props) => {
     const [questionData, setQuestionData] = useState([]);
     const [optionData, setOptionData] = useState([]);
 
-    const {data} = useSWR(`${process.env.REACT_APP_BASE_URL}/matches`, fetcher, {suspense:true});
+    const { data } = useSWR(`${process.env.REACT_APP_BASE_URL}/matches`, fetcher, { suspense: true });
     const [isOpen, setIsOpen] = useState(false);
 
     function closeModal() {
@@ -35,12 +35,12 @@ const BetList = (props) => {
             <Modalbetnow matchData={matchData} questionData={questionData} optionData={optionData} isOpen={isOpen} setIsOpen={setIsOpen} />
 
             <div className='col-span-12 lg:col-span-7 bg-white'>
-            <div className="bg-purple-800">
-                <h4 className="text-white font-bold p-1 text-center">Live Match</h4>
-            </div>
+                <div className="bg-purple-800">
+                    <h4 className="text-white font-bold p-1 text-center">Live Match</h4>
+                </div>
                 {
                     data.map((match, index) => {
-                        return <Disclosure as='div' className='shadow-md mb-1 border border-purple-300 text-sm' defaultOpen key={index}>
+                        return match.status=='live' && <Disclosure as='div' className='shadow-md mb-1 border border-purple-300 text-sm' defaultOpen key={index}>
                             <Disclosure.Button as='div' className="cursor-pointer p-2">
                                 <div className='flex items-center justify-between space-x-2 w-full'>
                                     <div className='flex items-center space-x-1'>
@@ -67,10 +67,9 @@ const BetList = (props) => {
                                 }
 
                             </Disclosure.Button>
-
                             {
                                 match.questions.map((question, index) => {
-                                    return <Disclosure.Panel className="" key={index}>
+                                    return question.is_hide=='0' && <Disclosure.Panel className="" key={index}>
                                         <div>
                                             <div className="text-white bg-purple-800 border px-2 py-1">
                                                 <h4 className="text-white font-bold">{question.title}</h4>
@@ -78,7 +77,7 @@ const BetList = (props) => {
                                             <div className="grid grid-cols-4">
                                                 {
                                                     question.options.map((option, index) => {
-                                                        return <div onClick={() => openModal(match,question,option)} className="col-span-2 border cursor-pointer border-gray-300 flex justify-between m-1" key={index}>
+                                                        return <div onClick={() => openModal(match, question, option)} className="col-span-2 border cursor-pointer border-gray-300 flex justify-between m-1" key={index}>
                                                             <span className="font-bold p-1">{option.title}</span>
                                                             <span className="bg-gray-300 font-bold p-1 px-4">{option.bet_rate}</span>
                                                         </div>
@@ -90,7 +89,6 @@ const BetList = (props) => {
                                     </Disclosure.Panel>
                                 })
                             }
-
                         </Disclosure>
                     })
                 }

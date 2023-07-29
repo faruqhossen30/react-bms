@@ -14,7 +14,7 @@ const Sidebar = () => {
     //         .catch(err => console.log(err))
     // }, []);
     const {data} = useSWR(`${process.env.REACT_APP_BASE_URL}/games`, fetcher, {suspense:true});
-    console.log(data);
+    // console.log(data);
 
     return (
         <div className='hidden lg:block lg:col-span-2 bg-white border border-purple-300'>

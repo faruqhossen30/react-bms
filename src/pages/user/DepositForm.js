@@ -21,9 +21,7 @@ const DepositForm = () => {
 
     const onSubmit = data => {
         console.log(data)
-        axios.post(`${process.env.REACT_APP_BASE_URL}/user/deposit`,
-            data
-        )
+        axios.post(`${process.env.REACT_APP_BASE_URL}/user/deposit`, data)
             .then((res) => {
                 console.log(res);
                 navigate('/profile')
@@ -53,9 +51,9 @@ const DepositForm = () => {
                                 To
                             </label>
                             <select {...register("to_account")} name="to_account" className='border w-full rounded focus:ring-purple-800 px-1'>
-                            <option defaultValue="" >Select</option>
+                                <option defaultValue="" >Select</option>
                                 {
-                                    accounts.map((item, index)=>{
+                                    accounts.map((item, index) => {
                                         return <option key={index} value={item.number} >{`${item.number} - ${item.bank}-${item.type}`})</option>
                                     })
                                 }

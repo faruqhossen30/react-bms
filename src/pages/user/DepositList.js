@@ -4,9 +4,10 @@ import UserNavbar from '../../components/frontend/UserNavbar'
 import AppLayout from '../../components/layouts/AppLayout'
 import { AuthContext } from '../../contexts/authContext'
 import axios from '../../util/axios'
+import { useAuthUser } from 'react-auth-kit'
 
 const DepositList = () => {
-    const user = useContext(AuthContext);
+    const auth = useAuthUser();
     const [deposits, setDeposits] = useState([]);
 
     useEffect(() => {

@@ -4,10 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import AppLayout from '../../components/layouts/AppLayout';
 import axios from '../../util/axios';
 import { AuthContext } from '../../contexts/authContext';
+import { useAuthUser, useSignIn } from 'react-auth-kit';
+import { toast } from 'react-toastify';
+import UserUpdate from '../../util/userUpdate';
 
 const WidthdrawForm = () => {
     const navigate = useNavigate();
-    const { user } = useContext(AuthContext);
+    const auth = useAuthUser();
+    const signIn = useSignIn();
+
     const { register, handleSubmit, formState: { errors } } = useForm();
     const[errorMessage, setErrorMessage] = useState('');
     const onSubmit = data => {
@@ -15,11 +20,14 @@ const WidthdrawForm = () => {
         axios.post(`${process.env.REACT_APP_BASE_URL}/user/withdraw`, data)
             .then((res) => {
                 console.log(res);
+                toast(res.data.message)
+                UserUpdate(signIn);
                 navigate('/profile')
             })
             .catch((err) => {
                 if(err.response.status == 422){
                     setErrorMessage(err.response.data.message)
+                    toast(err.response.data.message)
                 }
                 console.log('this is error', err);
                 // setErrors(err.response.data.errors)
@@ -72,7 +80,7 @@ const WidthdrawForm = () => {
                                 Amount
                             </label>
                             <input
-                                {...register("amount", { required: 'Amount Taka is requred.', max: { value: user?.balance, message: 'Insufficient  balance' } })}
+                                {...register("amount", { required: 'Amount Taka is requred.', max: { value: auth()?.balance, message: 'Insufficient  balance' } })}
                                 type="number"
                                 name="amount"
                                 id="first-name"

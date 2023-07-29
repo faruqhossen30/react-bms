@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../contexts/authContext';
 import axios from '../util/axios';
+import { useAuthUser } from 'react-auth-kit';
 
 const Register = () => {
-    const { user } = useContext(AuthContext);
+    const auth = useAuthUser();
     const navigate = useNavigate();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [clubs, setClubs] = useState([]);
@@ -44,7 +45,7 @@ const Register = () => {
     }
 
 
-    if (user) {
+    if (auth()) {
         return <Navigate to='/' />
     } else {
         return (

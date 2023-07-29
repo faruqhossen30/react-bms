@@ -3,19 +3,17 @@ import React, { useContext, useEffect, useState } from 'react'
 import { FaCheckCircle, FaRegTimesCircle} from 'react-icons/fa'
 import UserNavbar from '../../components/frontend/UserNavbar'
 import AppLayout from '../../components/layouts/AppLayout'
-import { AuthContext } from '../../contexts/authContext'
 import axios from '../../util/axios'
 
 const WidthdrawList = () => {
-    const user = useContext(AuthContext);
     const [deposits, setDeposits] = useState([]);
 
     // console.log('user',user);
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/user/${user._id}/widthdraws`)
+        axios.get(`${process.env.REACT_APP_BASE_URL}/user/withdraws`)
             .then((res) => {
-                setDeposits(res.data.docs)
+                setDeposits(res.data.data)
                 console.log(res);
             })
             .catch(err => console.log(err))
@@ -45,20 +43,21 @@ const WidthdrawList = () => {
                     <tbody>
                         {
                             deposits.map((deposit, index) => {
-                                return <tr className='p-1 text-sm' >
+                                return <tr className='p-1 text-sm' key={index}>
                                     <td className="p-2 border border-slate-300 text-center">{index + 1}</td>
                                     <td className="p-2 border border-slate-300">{deposit.amount}</td>
-                                    <td className="p-2 border border-slate-300">{deposit.accountNumber}</td>
+                                    <td className="p-2 border border-slate-300">{deposit.account}</td>
                                     <td className="p-2 border border-slate-300">{deposit.method}</td>
                                     <td className="p-2 border border-slate-300 text-center">
-                                        {
-                                            deposit.status ? (
+                                        {/* {
+                                            deposit.status=='1' ? (
                                                <button> <FaCheckCircle className='text-green-700' /></button>
                                             ) :
                                                 (
                                                     <button><FaRegTimesCircle className='text-red-700' /></button>
                                                 )
-                                        }
+                                        } */}
+                                        {deposit.status}
                                     </td>
                                     <td className="p-2 border border-slate-300">{moment(deposit.createdAt).calendar()}</td>
                                 </tr>

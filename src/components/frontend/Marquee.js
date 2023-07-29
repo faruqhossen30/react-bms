@@ -10,7 +10,7 @@ const Marquee = () => {
         <>
             <section className="">
                 <marquee className=" text-purple-800 text-sm pt-2">
-                    {data}
+                    {data ?? ''}
                 </marquee>
             </section>
 

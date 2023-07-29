@@ -4,11 +4,14 @@ import { FaCog, FaHome, FaList, FaMoneyBill, FaMoneyBillAlt, FaWallet } from 're
 import { Link } from 'react-router-dom'
 import {AuthContext} from '../../contexts/authContext'
 import logoutHandaller from '../../util/logoutHandaller'
+import { useAuthUser, useSignOut } from 'react-auth-kit'
 
 const Footer = () => {
-    const {user} = useContext(AuthContext);
+    // const {user} = useContext(AuthContext);
+    const auth = useAuthUser();
+    const signOut = useSignOut();
     return (
-        <footer className='md:hidden grid grid-cols-5 border-t-2 text-sm text-purple-800 bg-red-100 inset-x-0 bottom-0 fixed pt-1'>
+        <footer className='md:hidden grid grid-cols-5 border-t-2 text-sm text-purple-800 bg-red-100 inset-x-0 bottom-0 fixed pt-4'>
             <Link to='/' className='col-span-1 flex flex-col items-center'>
                 <FaHome />
                 <span>Home</span>
@@ -39,22 +42,21 @@ const Footer = () => {
                     <Menu.Item as='div' className="-top-2 transform -translate-y-full absolute right-0 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         {({ active }) => (
                             <>
-
                                 {
-                                    user && user.is_user
+                                    auth() && auth().username
                                         ? (
                                             <>
                                                 <Link to='/statement' className='flex items-center space-x-2 p-2'>
                                                     <FaCog />
                                                     <span>Settings</span>
                                                 </Link>
-                                                <button className='flex items-center space-x-2 p-2' onClick={logoutHandaller}>
+                                                <button className='flex items-center space-x-2 p-2' onClick={()=>signOut()}>
                                                     <FaMoneyBillAlt />
                                                     <span>Logout</span>
                                                 </button>
                                             </>
                                         )
-                                        : user && user.is_admin
+                                        : auth() && auth().username
                                             ? (
                                                 <>
                                                     <Link to='/admin/dashboard' className='flex items-center space-x-2 p-2'>

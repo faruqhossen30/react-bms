@@ -1,4 +1,4 @@
-import React from 'react'
+import { useSignOut } from 'react-auth-kit';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -6,6 +6,7 @@ import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(Swal)
 
 const logoutHandaller = () => {
+  // const signOut = useSignOut();
     MySwal.fire({
       // title: 'Are you want to Logout ?',
       text: "Are you want to Logout ?",
@@ -18,7 +19,8 @@ const logoutHandaller = () => {
       customClass: 'swal2-popup'
     }).then((result) => {
       if (result.isConfirmed) {
-        localStorage.removeItem("token");
+        // localStorage.removeItem("token");
+        // signOut();
         window.location = "/";
       }
     })

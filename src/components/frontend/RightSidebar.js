@@ -38,7 +38,7 @@ const RightSidebar = () => {
 
             {
                     data.map((match, index) => {
-                        return <Disclosure as='div' className='shadow-md mb-1 border border-purple-300 text-sm' key={index}>
+                        return match.status=='upcoming' && <Disclosure as='div' className='shadow-md mb-1 border border-purple-300 text-sm' key={index}>
                             <Disclosure.Button as='div' className="cursor-pointer p-2">
                                 <div className='flex items-center justify-between space-x-2 w-full'>
                                     <div className='flex items-center space-x-1'>

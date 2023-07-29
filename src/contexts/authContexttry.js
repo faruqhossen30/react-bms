@@ -18,9 +18,8 @@ const fetcher = (...args) => {
 };
 
 
-
 function useMyData() {
-    const { data, error } = useSWR('http://127.0.0.1:8000/api/user', fetcher);
+    const { data, error } = useSWR(`${process.env.REACT_APP_BASE_URL}/user`, fetcher);
     return data;
 }
 

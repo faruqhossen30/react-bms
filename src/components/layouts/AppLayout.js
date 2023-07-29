@@ -7,7 +7,8 @@ const AppLayout = ({children}) => {
     <>
         <Header/>
         {children}
-        <Footer/>
+        <div className='md:hidden h-10'></div>
+        <Footer />
     </>
   )
 }

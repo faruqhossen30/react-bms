@@ -8,14 +8,14 @@ import axios from '../../util/axios'
 
 const TransactionHistory = () => {
     const user = useContext(AuthContext);
-    const [deposits, setDeposits] = useState([]);
+    const [transactions, setTransactions] = useState([]);
 
     // console.log('user',user);
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/user/${user._id}/widthdraws`)
+        axios.get(`${process.env.REACT_APP_BASE_URL}/user/transactions`)
             .then((res) => {
-                setDeposits(res.data.docs)
+                setTransactions(res.data.data)
                 console.log(res);
             })
             .catch(err => console.log(err))
@@ -35,24 +35,25 @@ const TransactionHistory = () => {
                     <thead>
                         <tr className='bg-gray-100 text-gray-500 text-md font-normal'>
                             <th className="border border-slate-300">S.N</th>
-                            <th className="border border-slate-300">Amount</th>
-                            <th className="border border-slate-300">Account</th>
-                            <th className="border border-slate-300">Method</th>
+                            <th className="border border-slate-300">Credit</th>
+                            <th className="border border-slate-300">Debit</th>
+                            <th className="border border-slate-300">Description</th>
                             <th className="border border-slate-300">Status</th>
+                            <th className="border border-slate-300">Balance</th>
                             <th className="border border-slate-300">Time</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            deposits.map((deposit, index) => {
+                            transactions.map((transaction, index) => {
                                 return <tr className='p-1 text-sm' >
                                     <td className="p-2 border border-slate-300 text-center">{index + 1}</td>
-                                    <td className="p-2 border border-slate-300">{deposit.amount}</td>
-                                    <td className="p-2 border border-slate-300">{deposit.accountNumber}</td>
-                                    <td className="p-2 border border-slate-300">{deposit.method}</td>
+                                    <td className="p-2 border border-slate-300">{transaction.credit}</td>
+                                    <td className="p-2 border border-slate-300">{transaction.debit}</td>
+                                    <td className="p-2 border border-slate-300">{transaction.description}</td>
                                     <td className="p-2 border border-slate-300 text-center">
                                         {
-                                            deposit.status ? (
+                                            transaction.status ? (
                                                <button> <FaCheckCircle className='text-green-700' /></button>
                                             ) :
                                                 (
@@ -60,7 +61,8 @@ const TransactionHistory = () => {
                                                 )
                                         }
                                     </td>
-                                    <td className="p-2 border border-slate-300">{moment(deposit.createdAt).calendar()}</td>
+                                    <td className="p-2 border border-slate-300 text-center">{transaction.balance}</td>
+                                    <td className="p-2 border border-slate-300">{moment(transaction.createdAt).calendar()}</td>
                                 </tr>
                             })
                         }

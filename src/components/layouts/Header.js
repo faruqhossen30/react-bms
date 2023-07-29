@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { AuthContext } from '../../contexts/authContext';
+import { useAuthUser, useSignOut } from 'react-auth-kit';
+import { Button } from '@material-tailwind/react';
 
 const Header = () => {
-  const {user} = useContext(AuthContext);
-  // console.log('header component',user.is_admin);
+  const auth = useAuthUser();
+  const signOut = useSignOut();
   const MySwal = withReactContent(Swal)
   const logoutHandaller = () => {
     MySwal.fire({
@@ -21,7 +23,7 @@ const Header = () => {
       customClass: 'swal2-popup'
     }).then((result) => {
       if (result.isConfirmed) {
-        localStorage.removeItem("token");
+        signOut();
         window.location = "/";
       }
     })
@@ -34,7 +36,7 @@ const Header = () => {
       </div>
       <div className=' space-x-1'>
         {
-          user && user.is_user
+          auth() && auth().is_user
             ? (
               <>
                 <div className='hidden lg:block space-x-2'>
@@ -42,13 +44,13 @@ const Header = () => {
                   <Link to='/statement' className=' font-normal text-sm border rounded-md text-purple-800 px-3 py-1'>Statement</Link>
                   <Link to='/deposit' className=' font-normal text-sm border rounded-md text-purple-800 px-3 py-1'>Deposit</Link>
                   <Link to='/widthdraw' className=' font-normal text-sm border rounded-md text-purple-800 px-3 py-1'>Widthdray</Link>
-                  <Link to='/register' className=' font-normal text-sm border rounded-md text-purple-800 px-3 py-1' onClick={logoutHandaller}>Logout</Link>
-                  <span className='text-purple-800 font-bold'>৳{user.balance}</span>
+                  <Button className=' font-normal text-sm border rounded-md text-purple-800 px-3 py-1' onClick={logoutHandaller}>Logout</Button>
+                  <span className='text-purple-800 font-bold'>৳{auth().balance}</span>
                 </div>
-                <span className='lg:hidden text-purple-800 font-bold '>৳{user.balance}</span>
+                <span className='lg:hidden text-purple-800 font-bold '>৳{auth().balance}</span>
               </>
             )
-            :user && user.is_admin 
+            :auth() && auth().is_admin 
             ? (
               <>
                 <div className='hidden lg:block space-x-2'>

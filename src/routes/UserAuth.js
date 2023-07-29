@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import { Navigate, Outlet } from 'react-router-dom';
-import { AuthContext } from '../contexts/authContext';
+import { useAuthUser } from 'react-auth-kit';
 
 const UserAuth = () => {
-  const {user} = useContext(AuthContext);
+  const auth = useAuthUser();
   return (
-    user && user.is_user
+    auth() && auth().is_user
     ?<Outlet/>
     :<Navigate to='/login' replace />
   )
